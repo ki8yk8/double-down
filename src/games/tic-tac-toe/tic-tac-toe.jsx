@@ -55,7 +55,6 @@ export default function TicTacToe() {
 		grid: Array(9).fill(null),
 		first: null,
 		current: null,
-		highlghts: null,
 		winner: undefined,
 	});
 
@@ -110,6 +109,10 @@ export default function TicTacToe() {
 						key={index}
 						type={item}
 						onClick={handle_cell_clicked.bind(null, index)}
+						highlight={
+							typeof game.winner !== "undefined" &&
+							is_game_over(game.grid).includes(index)
+						}
 					/>
 				))}
 			</div>
