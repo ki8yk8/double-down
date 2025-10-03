@@ -44,10 +44,37 @@ function is_game_over(grid) {
 	return [];
 }
 
-function compute_move(grid) {}
+function compute_move(grid, bot_sign) {
+	const opponent_sign = bot_sign === "x" ? "o" : "x";
+
+	// if one step away from win conditions; both bot and themselves
+	const possible_win_conditions = WIN_CONDITIONS.filter(([a, b, c]) => {
+		if (
+			(grid[a] && grid[a] === grid[b] && grid[c] === null) ||
+			(grid[a] && grid[a] === grid[c] && grid[b] === null) ||
+			(grid[b] && grid[b] === grid[c] && grid[b] === null)
+		) {
+			return true;
+		}
+
+		return false;
+	});
+
+	const possible_user_win_conditions = possible_win_conditions.filter(
+		([a, b, c]) => grid[a] !== bot_sign && grid[b] !== bot_sign
+	);
+	const possible_bot_win_conditions = possible_win_conditions.filter(
+		([a, b, c]) => grid[a] !== opponent_sign && grid[b] !== opponent_sign
+	);
+
+	// if user is going to win
+	console.log("User wins if", possible_user_win_conditions);
+
+	// if bot is going to win
+	console.log("Bot wins if", possible_bot_win_conditions);
+}
 
 export default function TicTacToe() {
-	// bot = 0 and user = 1
 	const [game, set_game] = useState({
 		grid: Array(9).fill(null),
 		first: null,
@@ -74,7 +101,10 @@ export default function TicTacToe() {
 
 		const move_timeout = setTimeout(() => {
 			set_game((prev) => {
-				const move_index = compute_move(prev.grid);
+				const move_index = compute_move(
+					prev.grid,
+					game.first === "bot" ? "x" : "o"
+				);
 				const updated_grid = [...prev.grid];
 				updated_grid[move_index] = get_marker(prev.first, prev.current);
 
@@ -83,7 +113,7 @@ export default function TicTacToe() {
 					grid: updated_grid,
 				};
 			});
-		}, 1000);
+		}, 0);
 
 		return () => clearTimeout(move_timeout);
 	}, [game.current]);
@@ -115,7 +145,7 @@ export default function TicTacToe() {
 
 	return (
 		<>
-			{!game.winner && <p>{game.current}</p>}
+			{!game.winner && <p>{game.current} ({get_marker(game.first, game.current)})</p>}
 			{game.winner && is_game_over(game.grid).length !== 9 && (
 				<p>Game over. Winner is {game.winner}</p>
 			)}
