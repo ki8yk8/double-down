@@ -49,6 +49,10 @@ function is_game_over(grid) {
 	return [];
 }
 
+function compute_move() {
+	return 0;
+}
+
 export default function TicTacToe() {
 	// bot = 0 and user = 1
 	const [game, set_game] = useState({
@@ -70,6 +74,26 @@ export default function TicTacToe() {
 			current: rnd_first,
 		}));
 	}, []);
+
+	// if turn is of bot then do turn after say 1 second
+	useEffect(() => {
+		if (game.current !== "bot") return;
+
+		const move_timeout = setTimeout(() => {
+			set_game((prev) => {
+				const move_index = compute_move(game.grid);
+				const updated_grid = [...prev.grid];
+				updated_grid[move_index] = get_marker(prev.first, prev.current);
+
+				return {
+					...prev,
+					grid: updated_grid,
+				};
+			});
+		}, 1000);
+
+		return () => clearTimeout(move_timeout);
+	}, [game.current]);
 
 	const handle_cell_clicked = (index) => {
 		if (game.grid[index] || typeof game.winner !== "undefined") return;
