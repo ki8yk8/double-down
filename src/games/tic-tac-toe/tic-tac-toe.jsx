@@ -12,46 +12,39 @@ function get_marker(first, current) {
 	}
 }
 
+const WIN_CONDITIONS = [
+	[0, 1, 2],
+	[3, 4, 5],
+	[6, 7, 8],
+	[0, 3, 6],
+	[1, 4, 7],
+	[2, 5, 8],
+	[0, 4, 8],
+	[2, 4, 6],
+];
+
 function is_game_over(grid) {
-	// if all horizontal same
-	const horizontal_same = [0, 1, 2].map((row) => {
-		const a = grid[3 * row],
-			b = grid[3 * row + 1],
-			c = grid[3 * row + 2];
-		return a != null && a === b && a === c;
+	// if win condition have same symbol then win
+	const found_win_conditions = WIN_CONDITIONS.filter(([a, b, c]) => {
+		if (grid[a] && grid[a] === grid[b] && grid[a] === grid[c]) {
+			return true;
+		}
+
+		return false;
 	});
-	if (horizontal_same.some(Boolean)) {
-		const true_row = horizontal_same.indexOf(true);
-		return [3 * true_row, 3 * true_row + 1, 3 * true_row + 2];
+	if (found_win_conditions.length > 0) {
+		return found_win_conditions[0];
 	}
 
-	// if all vertical same
-	const vertical_same = [0, 1, 2].map((col) => {
-		const a = grid[col],
-			b = grid[3 + col],
-			c = grid[6 + col];
-		return a != null && a === b && a === c;
-	});
-	if (vertical_same.some(Boolean)) {
-		const true_col = vertical_same.indexOf(true);
-		return [0 + true_col, 3 + true_col, 6 + true_col];
-	}
-
-	// if diagonal same
-	if (grid[0] !== null && grid[0] === grid[4] && grid[0] === grid[8]) {
-		return [0, 4, 8];
-	}
-
-	if (grid[2] !== null && grid[2] === grid[4] && grid[4] === grid[6]) {
-		return [2, 4, 6];
+	// if all filled then draw
+	if (grid.every((item) => item)) {
+		return [0, 1, 2, 3, 4, 5, 6, 7, 8];
 	}
 
 	return [];
 }
 
-function compute_move() {
-	return 0;
-}
+function compute_move(grid) {}
 
 export default function TicTacToe() {
 	// bot = 0 and user = 1
@@ -81,7 +74,7 @@ export default function TicTacToe() {
 
 		const move_timeout = setTimeout(() => {
 			set_game((prev) => {
-				const move_index = compute_move(game.grid);
+				const move_index = compute_move(prev.grid);
 				const updated_grid = [...prev.grid];
 				updated_grid[move_index] = get_marker(prev.first, prev.current);
 
@@ -110,7 +103,12 @@ export default function TicTacToe() {
 				...prev,
 				grid: updated,
 				current: updated_current,
-				winner: is_game_over(updated).length > 0 ? prev.current : undefined,
+				winner:
+					is_game_over(updated).length > 0
+						? is_game_over(updated).length === 9
+							? "draw"
+							: prev.current
+						: undefined,
 			};
 		});
 	};
@@ -118,7 +116,12 @@ export default function TicTacToe() {
 	return (
 		<>
 			{!game.winner && <p>{game.current}</p>}
-			{game.winner && <p>Game over. Winner is {game.winner}</p>}
+			{game.winner && is_game_over(game.grid).length !== 9 && (
+				<p>Game over. Winner is {game.winner}</p>
+			)}
+			{game.winner && is_game_over(game.grid).length === 9 && (
+				<p>Game over. Game draw</p>
+			)}
 
 			<div
 				style={{
@@ -135,6 +138,7 @@ export default function TicTacToe() {
 						onClick={handle_cell_clicked.bind(null, index)}
 						highlight={
 							typeof game.winner !== "undefined" &&
+							is_game_over(game.grid).length !== 9 &&
 							is_game_over(game.grid).includes(index)
 						}
 					/>
