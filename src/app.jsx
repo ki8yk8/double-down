@@ -8,7 +8,7 @@ import TicTacToe from "./games/tic-tac-toe/tic-tac-toe";
 
 function App() {
 	const game_context = useContext(gameContext);
-	const [show_tic_tac, set_show_tic_tac] = useState(false);
+	const [show_tic_tac, set_show_tic_tac] = useState(true);
 
 	return (
 		<>
