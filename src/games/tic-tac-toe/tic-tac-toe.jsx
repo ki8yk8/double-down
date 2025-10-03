@@ -21,7 +21,8 @@ function is_game_over(grid) {
 		return a != null && a === b && a === c;
 	});
 	if (horizontal_same.some(Boolean)) {
-		return true;
+		const true_row = horizontal_same.indexOf(true);
+		return [3 * true_row, 3 * true_row + 1, 3 * true_row + 2];
 	}
 
 	// if all vertical same
@@ -32,18 +33,20 @@ function is_game_over(grid) {
 		return a != null && a === b && a === c;
 	});
 	if (vertical_same.some(Boolean)) {
-		return true;
+		const true_col = vertical_same.indexOf(true);
+		return [0 + true_col, 3 + true_col, 6 + true_col];
 	}
 
 	// if diagonal same
-	if (
-		(grid[0] !== null && grid[0] === grid[4] && grid[0] === grid[8]) ||
-		(grid[2] !== null && grid[2] === grid[4] && grid[4] === grid[6])
-	) {
-		return true;
+	if (grid[0] !== null && grid[0] === grid[4] && grid[0] === grid[8]) {
+		return [0, 4, 8];
 	}
 
-	return false;
+	if (grid[2] !== null && grid[2] === grid[4] && grid[4] === grid[6]) {
+		return [2, 4, 6];
+	}
+
+	return [];
 }
 
 export default function TicTacToe() {
@@ -52,7 +55,8 @@ export default function TicTacToe() {
 		grid: Array(9).fill(null),
 		first: null,
 		current: null,
-		active: true,
+		highlghts: null,
+		winner: undefined,
 	});
 
 	// at first set first and current same randomly
@@ -69,7 +73,7 @@ export default function TicTacToe() {
 	}, []);
 
 	const handle_cell_clicked = (index) => {
-		if (game.grid[index] || !game.active) return;
+		if (game.grid[index] || typeof game.winner !== "undefined") return;
 
 		set_game((prev) => {
 			// next turn
@@ -83,15 +87,15 @@ export default function TicTacToe() {
 				...prev,
 				grid: updated,
 				current: updated_current,
-				active: !is_game_over(updated),
+				winner: is_game_over(updated).length > 0 ? prev.current : undefined,
 			};
 		});
 	};
 
 	return (
 		<>
-			{game.active && <p>{game.current}</p>}
-			{!game.active && <p>Game over</p>}
+			{!game.winner && <p>{game.current}</p>}
+			{game.winner && <p>Game over. Winner is {game.winner}</p>}
 
 			<div
 				style={{
