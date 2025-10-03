@@ -1,0 +1,55 @@
+* {
+	box-sizing: border-box;
+}
+
+#root,
+:root {
+	--color-sky-blue: #8ecae6;
+	--color-blue-green: #219ebc;
+	--color-prussian-blue: #023047;
+	--color-selective-yellow: #ffb703;
+	--color-ut-orange: #fb8500;
+	--color-white: #f1faee;
+
+	box-sizing: border-box;
+	font-size: 20px;
+	font-family: "Poppins", sans-serif;
+	font-weight: 400;
+}
+
+body {
+	margin: 0;
+	padding: 20px 40px;
+	width: 100vw;
+	height: 100vh;
+	height: 100dvh;
+
+	background-color: var(--color-white);
+	color: var(--color-prussian-blue);
+}
+
+p,
+button {
+	margin: 0;
+	padding: 0;
+}
+
+button {
+	background-color: transparent;
+	border: none;
+	padding: 0;
+	margin: 0;
+	cursor: pointer;
+	transition: transform 250ms ease-in;
+}
+button:focus {
+	outline: none;
+}
+button:hover {
+	transform: scale(1.1);
+	transition: transform 250ms ease-out;
+}
+
+button.u-link {
+	display: block;
+}
