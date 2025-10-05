@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { GiKeyboard } from "react-icons/gi";
 
 // const PARAGRAPH =
 // 	"The toaster and I are in an ongoing feud. Every morning I politely request golden-brown perfection, and every morning it responds with charcoal. I’m convinced it has a grudge. Tomorrow I’m bringing in the air fryer as intimidation.";
@@ -47,7 +48,7 @@ function get_accuracy(given, ref) {
 
 export default function TypingGame() {
 	const [game, set_game] = useState({
-		stage: 1,
+		stage: 0,
 		typed_paragraph: "",
 		cpms: [0],
 	});
@@ -115,6 +116,8 @@ export default function TypingGame() {
 					borderRadius: "10px 10px 0 0",
 					borderBottom: "none",
 					padding: "30px",
+					display: "flex",
+					flexDirection: "column",
 				}}
 			>
 				<header>
@@ -126,36 +129,68 @@ export default function TypingGame() {
 					</p>
 				</header>
 
-				<main>
-					<p
-						style={{
-							fontSize: "1.4rem",
-							lineHeight: "2rem",
-							textAlign: "center",
-							marginTop: "2rem",
-						}}
-					>
-						{PARAGRAPH.split("").map((item, index) => (
-							<span
-								key={index}
+				<main style={{flexGrow: 1}}>
+					{game.stage === 0 && (
+						<>
+							<p
 								style={{
-									backgroundColor: get_color(
-										index,
-										game.typed_paragraph,
-										PARAGRAPH
-									),
+									textAlign: "center",
+									padding: "0 10%",
+									marginTop: "3rem",
 								}}
 							>
-								{item}
-							</span>
-						))}
-					</p>
+								Test your typing skills. Each try costs you 10 coins but, with
+								those coins you get chance to compete for the leaderboard. Click
+								start button and the time starts when you type first character.
+							</p>
+							<button
+								className="u-primary"
+								style={{
+									display: "flex",
+									alignItems: "center",
+									gap: "0.5rem",
+									margin: "0 auto",
+									marginTop: "2rem",
+								}}
+								onClick={() => set_game((prev) => ({ ...prev, stage: 1 }))}
+							>
+								Start typing <GiKeyboard size="1.5rem" />
+							</button>
+						</>
+					)}
+					{game.stage === 1 && (
+						<p
+							style={{
+								fontSize: "1.4rem",
+								lineHeight: "2rem",
+								textAlign: "center",
+								marginTop: "2rem",
+							}}
+						>
+							{PARAGRAPH.split("").map((item, index) => (
+								<span
+									key={index}
+									style={{
+										backgroundColor: get_color(
+											index,
+											game.typed_paragraph,
+											PARAGRAPH
+										),
+									}}
+								>
+									{item}
+								</span>
+							))}
+						</p>
+					)}
 				</main>
 
-				<footer>
-					<p>{compute_mean(game.cpms)} WPM</p>
-					<p>{get_accuracy(game.typed_paragraph, PARAGRAPH)}% Accurate</p>
-				</footer>
+				{game.stage === 1 && (
+					<footer style={{display: "flex", gap: "3rem"}}>
+						<p>{compute_mean(game.cpms)} WPM</p>
+						<p>{get_accuracy(game.typed_paragraph, PARAGRAPH)}% Accurate</p>
+					</footer>
+				)}
 			</section>
 		</div>
 	);
