@@ -12,7 +12,7 @@ function App() {
 	const { game_ctx, set_game_ctx } = useContext(GameContext);
 	const [show_tic_tac, set_show_tic_tac] = useState(false);
 	const [show_range, set_show_range] = useState(false);
-	const [show_typing, set_show_typing] = useState(true);
+	const [show_typing, set_show_typing] = useState(false);
 
 	return (
 		<>
@@ -57,7 +57,7 @@ function App() {
 				<RangeGame />
 			</Modal>
 
-			{show_typing && <TypingGame />}
+			{show_typing && <TypingGame onClose={() => set_show_typing(false)} />}
 		</>
 	);
 }

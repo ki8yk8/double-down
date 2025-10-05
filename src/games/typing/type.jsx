@@ -1,5 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { GiKeyboard } from "react-icons/gi";
+import { MdClose } from "react-icons/md";
 import GameContext from "../../contexts/game-context";
 
 // const PARAGRAPH =
@@ -51,7 +52,7 @@ function compute_score(WPM, accuracy) {
 	return (WPM * 10 * accuracy) / 100;
 }
 
-export default function TypingGame() {
+export default function TypingGame({ onClose }) {
 	const { game_ctx, set_game_ctx } = useContext(GameContext);
 	const [game, set_game] = useState({
 		stage: 0,
@@ -149,6 +150,12 @@ export default function TypingGame() {
 					<p style={{ textAlign: "center", fontSize: "0.8rem" }}>
 						Type faster and accurate to win
 					</p>
+					<button
+						style={{ position: "absolute", right: "10px", top: "10px" }}
+						onClick={onClose}
+					>
+						<MdClose size="1.25rem" color="var(--color-prussian-blue)" />
+					</button>
 				</header>
 
 				<main style={{ flexGrow: 1 }}>

@@ -6,7 +6,7 @@ const GameContext = createContext({
 
 export function GameContextProvider({ children }) {
 	const [game_ctx, set_game_ctx] = useState({
-		coins: 15,
+		coins: 5,
 	});
 
 	const value = { game_ctx, set_game_ctx };
