@@ -46,6 +46,10 @@ function get_accuracy(given, ref) {
 	return Math.round((matched.length / given.length) * 100);
 }
 
+function compute_score(WPM, accuracy) {
+	return (WPM * 10 * accuracy) / 100;
+}
+
 export default function TypingGame() {
 	const [game, set_game] = useState({
 		stage: 0,
@@ -129,7 +133,57 @@ export default function TypingGame() {
 					</p>
 				</header>
 
-				<main style={{flexGrow: 1}}>
+				<main style={{ flexGrow: 1 }}>
+					{game.stage === 2 && (
+						<div
+							style={{ display: "flex", flexDirection: "column", gap: "2rem" }}
+						>
+							<div
+								style={{
+									display: "flex",
+									flexDirection: "column",
+									gap: "0.4rem",
+								}}
+							>
+								<p>
+									⚡ Speed:{" "}
+									<span className="u-medium">
+										{compute_mean(game.cpms)} WPM
+									</span>
+								</p>
+								<p>
+									🎯 Accuracy:{" "}
+									<span className="u-medium">
+										{get_accuracy(game.typed_paragraph, PARAGRAPH)}%
+									</span>
+								</p>
+								<p>
+									🏆 Final Score:{" "}
+									<span className="u-medium">
+										{compute_score(
+											compute_mean(game.cpms),
+											get_accuracy(game.typed_paragraph, PARAGRAPH)
+										)}
+									</span>
+								</p>
+							</div>
+
+							<div
+								style={{
+									display: "flex",
+									flexDirection: "column",
+									gap: "0.4rem",
+								}}
+							>
+								<p>🤑🤑 Got Coins? Bribe the score system!</p>
+								<p>10 coins = +100 points</p>
+								<p>(We don't believe in fair play)</p>
+							</div>
+
+							<button className="u-primary">Spend 20 Coins → +200 Score</button>
+						</div>
+					)}
+
 					{game.stage === 0 && (
 						<>
 							<p
@@ -186,7 +240,7 @@ export default function TypingGame() {
 				</main>
 
 				{game.stage === 1 && (
-					<footer style={{display: "flex", gap: "3rem"}}>
+					<footer style={{ display: "flex", gap: "3rem" }}>
 						<p>{compute_mean(game.cpms)} WPM</p>
 						<p>{get_accuracy(game.typed_paragraph, PARAGRAPH)}% Accurate</p>
 					</footer>
