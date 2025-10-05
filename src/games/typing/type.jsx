@@ -257,7 +257,7 @@ export default function TypingGame({ onClose }) {
 									marginTop: "2rem",
 								}}
 								onClick={handle_typing_start}
-								disabled={game_ctx.coins <= 10}
+								disabled={game_ctx.coins < 10}
 							>
 								<p
 									style={{
