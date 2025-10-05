@@ -16,7 +16,13 @@ export default function RangeGame() {
 					min={0}
 					max={100}
 					allowOverlap
-					onChange={set_range_values}
+					onChange={(values) => {
+						let [p0, p1, p2] = values;
+
+						if (p1 > p2) p1 = p2;
+						if (p2 < p1) p2 = p1;
+						set_range_values([p0, p1, p2]);
+					}}
 					renderTrack={({ props, children }) => {
 						const [p0, p1, p2] = range_values;
 
