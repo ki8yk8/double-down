@@ -45,7 +45,7 @@ function is_game_over(grid) {
 }
 
 function get_random_move(arr, n = 1) {
-	return arr[0];
+	return arr[Math.floor(Math.random() * arr.length)];
 }
 
 function compute_move(grid, bot_sign) {
@@ -71,29 +71,32 @@ function compute_move(grid, bot_sign) {
 		([a, b, c]) => ![grid[a], grid[b], grid[c]].includes(opponent_sign)
 	);
 
-	// if bot is going to win then, return win move
-	if (possible_bot_win_conditions.length > 0) {
+	// if bot is going to win then, return win move 90% of the time
+	if (Math.random() < 0.9 && possible_bot_win_conditions.length > 0) {
 		return get_random_move(possible_bot_win_conditions).filter(
 			(index) => grid[index] === null
 		)[0];
 	}
 
-	// if user is going to win and bot cannot win in one move, then return block move
-	if (possible_user_win_conditions.length > 0) {
+	// if user is going to win and bot cannot win in one move, then return block move 75% of the time
+	if (Math.random() < 0.75 && possible_user_win_conditions.length > 0) {
 		return get_random_move(possible_user_win_conditions).filter(
 			(index) => grid[index] === null
 		)[0];
 	}
 
 	// if there are no possible win conditions then first goal is center
-	if (grid[4] === null) {
+	// do this only 20% of the time; to let user also win
+	if (Math.random() < 0.2 && grid[4] === null) {
 		return 4;
 	}
 
 	// then corners
 	const corners = [0, 2, 6, 8];
 	const available_corners = corners.filter((index) => grid[index] === null);
-	if (available_corners.length > 0) {
+
+	// do this 30% of the time
+	if (Math.random() < 0.3 && available_corners.length > 0) {
 		return get_random_move(available_corners);
 	}
 
@@ -127,7 +130,7 @@ export default function TicTacToe() {
 
 	// if turn is of bot then do turn after say 1 second
 	useEffect(() => {
-		if (game.current !== "bot") return;
+		if (game.current !== "bot" || game.winner) return;
 
 		const move_timeout = setTimeout(() => {
 			set_game((prev) => {
