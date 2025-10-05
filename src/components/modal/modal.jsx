@@ -22,16 +22,17 @@ export default function Modal({ isOpen, onClose, children }) {
 				style={{
 					backgroundColor: "var(--color-white)",
 					border: "2px solid var(--color-blue-green)",
-					minWidth: "50vw",
-					minHeight: "60vh",
+					maxWidth: "40vw",
 					borderRadius: "8px",
-					padding: "1.5rem"
+					padding: "1rem",
+					position: "relative"
 				}}
 			>
 				<header
 					style={{
-						display: "flex",
-						justifyContent: "flex-end",
+						position: "absolute",
+						top: "10px",
+						right: "10px"
 					}}
 				>
 					<button onClick={onClose}>

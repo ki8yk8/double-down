@@ -53,3 +53,25 @@ button:hover {
 button.u-link {
 	display: block;
 }
+
+button.u-primary {
+	display: block;
+	background-color: var(--color-ut-orange);
+	color: #fff;
+	font-size: 1rem;
+	padding: 0.5rem 1rem;
+	border-radius: 8px;
+	font-weight: 500;
+}
+
+h3 {
+	margin: 0;
+	padding: 0;
+	font-size: 1.15rem;
+	font-weight: 600;
+}
+
+p {
+	line-height: 1.2rem;
+	margin: 0;
+}

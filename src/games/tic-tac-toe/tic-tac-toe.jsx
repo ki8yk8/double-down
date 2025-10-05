@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import { LuSwords } from "react-icons/lu";
+import { BsXCircle, BsCircle } from "react-icons/bs";
+
 import Cell from "./cell";
 
 import styles from "./tic-tac-toe.module.css";
@@ -113,10 +116,13 @@ export default function TicTacToe() {
 		first: null,
 		current: null,
 		winner: undefined,
+		active: false,
 	});
 
 	// at first set first and current same randomly
 	useEffect(() => {
+		if (!game.active) return;
+
 		// if random number is even then bot else user
 		const rnd_number = Math.floor(Math.random() * 20);
 		const rnd_first = rnd_number % 2 === 0 ? "bot" : "user";
@@ -126,11 +132,11 @@ export default function TicTacToe() {
 			first: rnd_first,
 			current: rnd_first,
 		}));
-	}, []);
+	}, [game.active]);
 
 	// if turn is of bot then do turn after say 1 second
 	useEffect(() => {
-		if (game.current !== "bot" || game.winner) return;
+		if (game.current !== "bot" || !game.active) return;
 
 		const move_timeout = setTimeout(() => {
 			set_game((prev) => {
@@ -152,6 +158,7 @@ export default function TicTacToe() {
 								? "draw"
 								: prev.current
 							: undefined,
+					active: ![3, 9].includes(is_game_over(updated_grid).length),
 				};
 			});
 		}, 500);
@@ -160,12 +167,7 @@ export default function TicTacToe() {
 	}, [game.current]);
 
 	const handle_cell_clicked = (index) => {
-		if (
-			game.grid[index] ||
-			typeof game.winner !== "undefined" ||
-			game.current === "bot"
-		)
-			return;
+		if (game.grid[index] || !game.active || game.current === "bot") return;
 
 		set_game((prev) => {
 			// next turn
@@ -185,29 +187,57 @@ export default function TicTacToe() {
 							? "draw"
 							: prev.current
 						: undefined,
+				active: ![3, 9].includes(is_game_over(updated).length),
 			};
 		});
 	};
 
 	return (
-		<>
-			{!game.winner && (
-				<p>
-					{game.current} ({get_marker(game.first, game.current)})
+		<section style={{ width: "350px" }}>
+			<header>
+				<h3 style={{ color: "var(--color-blue-green)" }}>Tic Tac Toe</h3>
+				{game.active === false && typeof game.winner === "undefined" && (
+					<p style={{ fontSize: "0.85rem" }}>
+						1 coin to enter. Get 3 coins if you win else return home with
+						nothing.
+					</p>
+				)}
+			</header>
+			{game.active && (
+				<p
+					style={{
+						display: "flex",
+						alignItems: "center",
+						gap: "0.25rem",
+						justifyContent: "center",
+						marginTop: "1.25rem",
+					}}
+				>
+					{game.current === "user" ? "Your" : "Bot's"}
+					{get_marker(game.first, game.current) === "o" ? (
+						<BsCircle size="1.25rem" />
+					) : (
+						<BsXCircle size="1.25rem" />
+					)}{" "}
+					turn.
 				</p>
 			)}
 			{game.winner && is_game_over(game.grid).length !== 9 && (
-				<p>Game over. Winner is {game.winner}</p>
+				<p style={{ textAlign: "center", marginTop: "1.25rem" }}>
+					Game over.{" "}
+					<span style={{ textTransform: "capitalize" }}>{game.winner}</span> won
+				</p>
 			)}
 			{game.winner && is_game_over(game.grid).length === 9 && (
-				<p>Game over. Game draw</p>
+				<p style={{ textAlign: "center", marginTop: "1.25rem" }}>Game draw</p>
 			)}
-
 			<div
 				style={{
 					display: "grid",
 					gridTemplateColumns: "repeat(3, 3rem)",
 					gridTemplateRows: "repeat(3, 3rem)",
+					justifyContent: "center",
+					marginTop: "1rem",
 				}}
 				className={styles["grid"]}
 			>
@@ -224,6 +254,18 @@ export default function TicTacToe() {
 					/>
 				))}
 			</div>
-		</>
+			{game.active === false && typeof game.winner === "undefined" && (
+				<button
+					className="u-primary"
+					style={{ display: "block", margin: "0 auto", marginTop: "1rem" }}
+					onClick={() => set_game((prev) => ({ ...prev, active: true }))}
+				>
+					Gamble <LuSwords />
+					<span style={{ display: "block", fontSize: "0.7rem" }}>
+						(-1 coin)
+					</span>
+				</button>
+			)}
+		</section>
 	);
 }
