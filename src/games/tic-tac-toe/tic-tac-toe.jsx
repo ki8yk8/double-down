@@ -44,6 +44,10 @@ function is_game_over(grid) {
 	return [];
 }
 
+function get_random_move(arr, n = 1) {
+	return arr[0];
+}
+
 function compute_move(grid, bot_sign) {
 	const opponent_sign = bot_sign === "x" ? "o" : "x";
 
@@ -52,7 +56,7 @@ function compute_move(grid, bot_sign) {
 		if (
 			(grid[a] && grid[a] === grid[b] && grid[c] === null) ||
 			(grid[a] && grid[a] === grid[c] && grid[b] === null) ||
-			(grid[b] && grid[b] === grid[c] && grid[b] === null)
+			(grid[b] && grid[b] === grid[c] && grid[a] === null)
 		) {
 			return true;
 		}
@@ -61,17 +65,25 @@ function compute_move(grid, bot_sign) {
 	});
 
 	const possible_user_win_conditions = possible_win_conditions.filter(
-		([a, b, c]) => grid[a] !== bot_sign && grid[b] !== bot_sign
+		([a, b, c]) => ![grid[a], grid[b], grid[c]].includes(bot_sign)
 	);
 	const possible_bot_win_conditions = possible_win_conditions.filter(
-		([a, b, c]) => grid[a] !== opponent_sign && grid[b] !== opponent_sign
+		([a, b, c]) => ![grid[a], grid[b], grid[c]].includes(opponent_sign)
 	);
 
-	// if user is going to win
-	console.log("User wins if", possible_user_win_conditions);
+	// if bot is going to win then, return win move
+	if (possible_bot_win_conditions.length > 0) {
+		return get_random_move(possible_bot_win_conditions).filter(
+			(index) => grid[index] === null
+		)[0];
+	}
 
-	// if bot is going to win
-	console.log("Bot wins if", possible_bot_win_conditions);
+	// if user is going to win and bot cannot win in one move, then return block move
+	if (possible_user_win_conditions.length > 0) {
+		return get_random_move(possible_user_win_conditions).filter(
+			(index) => grid[index] === null
+		)[0];
+	}
 }
 
 export default function TicTacToe() {
@@ -105,15 +117,22 @@ export default function TicTacToe() {
 					prev.grid,
 					game.first === "bot" ? "x" : "o"
 				);
+
 				const updated_grid = [...prev.grid];
 				updated_grid[move_index] = get_marker(prev.first, prev.current);
 
 				return {
 					...prev,
 					grid: updated_grid,
+					winner:
+						is_game_over(updated_grid).length > 0
+							? is_game_over(updated_grid).length === 9
+								? "draw"
+								: prev.current
+							: undefined,
 				};
 			});
-		}, 0);
+		}, 1000);
 
 		return () => clearTimeout(move_timeout);
 	}, [game.current]);
@@ -145,7 +164,11 @@ export default function TicTacToe() {
 
 	return (
 		<>
-			{!game.winner && <p>{game.current} ({get_marker(game.first, game.current)})</p>}
+			{!game.winner && (
+				<p>
+					{game.current} ({get_marker(game.first, game.current)})
+				</p>
+			)}
 			{game.winner && is_game_over(game.grid).length !== 9 && (
 				<p>Game over. Winner is {game.winner}</p>
 			)}
