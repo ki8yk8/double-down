@@ -4,9 +4,21 @@ import { Range } from "react-range";
 function get_instruction(stage) {
 	switch (stage) {
 		case 0:
-			return "The game is simple, you have to guess the range in which the random number will fall, if it falls within the range, you earn points else you lose. And here it get's interesting the smaller the range of your guess more is the muliplier.";
-			break;
+			return "Pick a number range. Smaller range = bigger multiplier. Miss it and you lose it all!";
+		case 1:
+			return "Lock in your range wisely. Skinny range = fat rewards.";
+		case 2:
+			return "Rolling the number...";
+		case 3:
+			return "And the number is...";
 	}
+}
+
+function get_coin(max, min) {
+	const diff = max - min;
+	const reward = Math.round(1 + 14 * Math.pow((100 - diff) / 99, 2));
+
+	return reward;
 }
 
 export default function RangeGame() {
@@ -27,14 +39,14 @@ export default function RangeGame() {
 						fontSize: "0.8rem",
 						lineHeight: "1rem",
 						textAlign: "center",
-						marginTop: "1.25rem",
+						marginTop: "0.5rem",
 					}}
 				>
 					{game.instruction}
 				</p>
 			</header>
 			<main style={{ marginTop: "2rem" }}>
-				<div style={{ width: "calc(100% - 2 * 20px)", margin: "0 auto" }}>
+				<div style={{ width: "calc(100% - 2 * 10px)", margin: "0 auto" }}>
 					<Range
 						values={range_values}
 						step={1}
@@ -60,28 +72,63 @@ export default function RangeGame() {
 							const [p0, p1, p2] = range_values;
 
 							return (
-								<div
-									{...props}
-									style={{
-										...props.style,
-										height: "6px",
-										width: "100%",
-										background: "red",
-										position: "relative",
-									}}
-								>
-									{/*Between P1 and P2*/}
+								<>
+									<div
+										{...props}
+										style={{
+											...props.style,
+											height: "6px",
+											width: "100%",
+											background: "red",
+											position: "relative",
+										}}
+									>
+										{/*Between P1 and P2*/}
+										<div
+											style={{
+												position: "absolute",
+												left: `${p1}%`,
+												width: `${p2 - p1}%`,
+												height: "100%",
+												background: "green",
+											}}
+										/>
+										{children}
+									</div>
 									<div
 										style={{
-											position: "absolute",
-											left: `${p1}%`,
-											width: `${p2 - p1}%`,
-											height: "100%",
-											background: "green",
+											display: "flex",
+											justifyContent: "space-between",
+											width: "calc(100% + 14px)",
+											marginLeft: "-3px",
+											marginTop: "0.3rem",
 										}}
-									/>
-									{children}
-								</div>
+									>
+										{Array(11)
+											.fill(0)
+											.map((_, index) => (
+												<div
+													key={index}
+													style={{
+														display: "flex",
+														flexDirection: "column",
+														alignItems: "center",
+													}}
+												>
+													<div
+														style={{
+															width: "2px",
+															height: "5px",
+															background: "black",
+														}}
+													/>
+													<span style={{ fontSize: "0.7rem" }}>
+														{(index + 1) * 10 - 10}
+													</span>
+												</div>
+											))}
+									</div>
+								</>
 							);
 						}}
 						renderThumb={({ props, index }) => {
@@ -111,14 +158,17 @@ export default function RangeGame() {
 			</main>
 			{game.stage === 1 && (
 				<footer style={{ marginTop: "1.5rem" }}>
-					<p style={{ fontSize: "0.9rem" }}>
-						You guess range is between{" "}
-						<span className="u-medium">{range_values[1]}</span> and{" "}
-						<span className="u-medium">{range_values[2]}</span>
+					<p style={{ fontSize: "0.8rem" }}>
+						Range locked:{" "}
+						<span className="u-medium">
+							{range_values[1]} to {range_values[2]}
+						</span>
 					</p>
-					<p style={{ fontSize: "0.9rem" }}>
-						On winning, you will get{" "}
-						{Math.ceil(10 - (range_values[2] - range_values[1]) / 10)} coins.
+					<p style={{ fontSize: "0.85rem" }}>
+						Reward on hit{" "}
+						<span className="u-medium">
+							+{get_coin(range_values[2], range_values[1])} coins
+						</span>
 					</p>
 				</footer>
 			)}
