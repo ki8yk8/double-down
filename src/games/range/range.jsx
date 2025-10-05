@@ -4,6 +4,11 @@ import { Range } from "react-range";
 export default function RangeGame() {
 	// [winner, min guess, max guess]
 	const [range_values, set_range_values] = useState([0, 10, 90]);
+	// stage: 0 = initial, 1 = user is selecting, 2 = winner is happening, 3 = winner announced
+	const [game, set_game] = useState({
+		stage: 0,
+	});
+
 	return (
 		<section>
 			<header>
@@ -15,13 +20,21 @@ export default function RangeGame() {
 					step={1}
 					min={0}
 					max={100}
-					allowOverlap
+					allowOverlap={game.stage === 2}
 					onChange={(values) => {
-						let [p0, p1, p2] = values;
+						const [p0, p1, p2] = range_values;
+						let [q0, q1, q2] = values;
 
-						if (p1 > p2) p1 = p2;
-						if (p2 < p1) p2 = p1;
-						set_range_values([p0, p1, p2]);
+						// the difference between p1 and p2 must be at least 1;
+						if (p1 !== q1) {
+							// p1 has moved so,
+							if (q1 > p2 - 1) q1 = p2 - 1;
+						} else if (p2 !== q2) {
+							// p2 has moved so,
+							if (q2 < p1 + 1) q2 = p1 + 1;
+						}
+
+						set_range_values([q0, q1, q2]);
 					}}
 					renderTrack={({ props, children }) => {
 						const [p0, p1, p2] = range_values;
@@ -64,6 +77,10 @@ export default function RangeGame() {
 									width: "16px",
 									borderRadius: "50%",
 									background: index === 0 ? "black" : "grey",
+									display:
+										index === 0 && [0, 1].includes(game.stage)
+											? "none"
+											: "block",
 									zIndex: index === 0 ? 10 : 5,
 								}}
 							/>
