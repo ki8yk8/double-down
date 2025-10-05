@@ -3,7 +3,7 @@
 	border-right: 2px dashed #000;
 }
 
-.grid > button:nth-child(-n+6) {
+.grid > button:nth-child(-n + 6) {
 	border-bottom: 2px dashed #000;
 }
 
@@ -11,7 +11,6 @@
 	transform: none;
 }
 
-/* Responsive grid for mobile */
 @media (max-width: 768px) {
 	.grid {
 		max-width: 300px;

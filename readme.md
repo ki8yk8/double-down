@@ -22,6 +22,16 @@
 
 # Everything is about COIN here 💰💸
 
+# Some tricks I have used
+## To prevent bot always winning in TicTacToe
+There is use of probability in every move suchh that bot sometime make mistakes and there is randomness in the game.
+- If bot wins in next move, then only 90% of the time the bot plays the winning move,
+- If user is going to win on next move, bot blocks it 75% of the time,
+- Bot tries to go with center piece only 20% of the time,
+- Similarly, corner pieces are favored 30% of the time.
+
+This also prevents high draws and let user win occasionally.
+
 # Tools Used
 1. React JS
 2. For sliders I used `react-siders` by Airbnb.

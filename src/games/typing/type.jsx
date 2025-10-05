@@ -213,7 +213,10 @@ export default function TypingGame({ onClose }) {
 										<p>(We don't believe in fair play)</p>
 									</div>
 
-									<div className="u-flex u-gap-1 u-mobile-stack" style={{ flexWrap: "nowrap" }}>
+									<div
+										className="u-flex u-gap-1 u-mobile-stack"
+										style={{ flexWrap: "nowrap" }}
+									>
 										<button
 											className="u-primary"
 											onClick={handle_offer_clicked.bind(null, true)}
@@ -272,7 +275,14 @@ export default function TypingGame({ onClose }) {
 						</>
 					)}
 					{game.stage === 1 && (
-						<p style={{ fontSize: "min(1.4rem, 4vw)", lineHeight: "min(2rem, 5vw)", textAlign: "center", marginTop: "2rem" }}>
+						<p
+							style={{
+								fontSize: "min(1.4rem, 4vw)",
+								lineHeight: "min(2rem, 5vw)",
+								textAlign: "center",
+								marginTop: "2rem",
+							}}
+						>
 							{PARAGRAPH.split("").map((item, index) => (
 								<span
 									key={index}

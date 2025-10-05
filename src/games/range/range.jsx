@@ -211,7 +211,10 @@ export default function RangeGame() {
 										height: "30px",
 										width: "20px",
 										borderRadius: "3px",
-										background: index === 0 ? "var(--color-ut-orange)" : "var(--color-prussian-blue)",
+										background:
+											index === 0
+												? "var(--color-ut-orange)"
+												: "var(--color-prussian-blue)",
 										display:
 											index === 0 && [0, 1].includes(game.stage)
 												? "none"
@@ -268,7 +271,7 @@ export default function RangeGame() {
 							<span className="u-medium">
 								+
 								{range_values[1] <= game.random_number &&
-								game.random_number <= range_values[2] 
+								game.random_number <= range_values[2]
 									? get_coin(range_values[2], range_values[1])
 									: 0}{" "}
 								coins.
