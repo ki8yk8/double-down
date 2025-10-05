@@ -25,7 +25,7 @@ export default function TicTacToe() {
 
 		// if random number is even then bot else user
 		const rnd_number = Math.floor(Math.random() * 20);
-		const rnd_first = rnd_number % 2 === 0 ? "bot" : "user";
+		const rnd_first = rnd_number % 2 === 0 ? "bot" : "you";
 
 		set_game((prev) => ({
 			...prev,
@@ -51,7 +51,7 @@ export default function TicTacToe() {
 				return {
 					...prev,
 					grid: updated_grid,
-					current: "user",
+					current: "you",
 					winner:
 						is_game_over(updated_grid).length > 0
 							? is_game_over(updated_grid).length === 9
@@ -67,7 +67,7 @@ export default function TicTacToe() {
 	}, [game.current]);
 
 	useEffect(() => {
-		if (game.winner === "user") {
+		if (game.winner === "you") {
 			set_game_ctx((prev) => ({ ...prev, coins: prev.coins + 3 }));
 		}
 	}, [game.winner]);
@@ -77,7 +77,7 @@ export default function TicTacToe() {
 
 		set_game((prev) => {
 			// next turn
-			const updated_current = game.current === "bot" ? "user" : "bot";
+			const updated_current = game.current === "bot" ? "you" : "bot";
 
 			// update the grid
 			const updated = [...prev.grid];
@@ -126,7 +126,7 @@ export default function TicTacToe() {
 						marginTop: "1.25rem",
 					}}
 				>
-					{game.current === "user" ? "Your" : "Bot's"}
+					{game.current === "you" ? "Your" : "Bot's"}
 					{get_marker(game.first, game.current) === "o" ? (
 						<BsCircle size="1.25rem" />
 					) : (
