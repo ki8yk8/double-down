@@ -75,3 +75,7 @@ p {
 	line-height: 1.2rem;
 	margin: 0;
 }
+
+span.u-medium, p.u-medium {
+	font-weight: 500;
+}
