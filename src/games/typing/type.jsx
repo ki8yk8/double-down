@@ -20,6 +20,18 @@ function compute_mean(arr) {
 	return Math.round(arr.reduce((sum, n) => sum + n, 0) / arr.length);
 }
 
+function get_accuracy(given, ref) {
+	if (given.length === 0) return 0;
+
+	const matched = given
+		.split("")
+		.filter(
+			(item, index) => index < ref.length && item === ref.split("")[index]
+		);
+
+	return Math.round((matched.length / given.length) * 100);
+}
+
 export default function TypingGame() {
 	const [game, set_game] = useState({
 		stage: 1,
@@ -113,7 +125,10 @@ export default function TypingGame() {
 					</p>
 				</main>
 
-				<footer>{compute_mean(game.cpms)} WPM</footer>
+				<footer>
+					<p>{compute_mean(game.cpms)} WPM</p>
+					<p>{get_accuracy(game.typed_paragraph, PARAGRAPH)}% Accurate</p>
+				</footer>
 			</section>
 		</div>
 	);
