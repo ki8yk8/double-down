@@ -22,7 +22,7 @@ export default function Modal({ isOpen, onClose, children }) {
 				style={{
 					backgroundColor: "var(--color-white)",
 					border: "2px solid var(--color-blue-green)",
-					maxWidth: "40vw",
+					width: "40vw",
 					borderRadius: "8px",
 					padding: "1rem",
 					position: "relative"

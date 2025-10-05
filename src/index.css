@@ -79,3 +79,15 @@ p {
 span.u-medium, p.u-medium {
 	font-weight: 500;
 }
+
+.u-animate-scale {
+	animation: animate-scale 200ms ease-in-out infinite alternate-reverse;
+}
+
+@keyframes animate-scale {
+	from {
+		transform: scale(1);
+	}	to {
+		transform: scale(1.05);
+	}
+}
