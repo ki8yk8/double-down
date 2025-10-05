@@ -7,6 +7,18 @@ function is_valid_char(char) {
 	return /^[a-zA-Z0-9\p{P} ]$/u.test(char);
 }
 
+function get_color(index, typed, original) {
+	if (index === typed.length) {
+		return "var(--color-selective-yellow";
+	} else if (index > typed.length) {
+		return "var(--color-sky-blue)";
+	} else if (typed[index] === original[index]) {
+		return "var(--color-ut-orange)";
+	} else {
+		return "var(--color-red)";
+	}
+}
+
 function compute_wpm(start_time, length) {
 	const current_time = Date.now();
 
@@ -113,10 +125,11 @@ export default function TypingGame() {
 							<span
 								key={index}
 								style={{
-									backgroundColor:
-										index === game.typed_paragraph.length
-											? "var(--color-selective-yellow)"
-											: "var(--color-sky-blue)",
+									backgroundColor: get_color(
+										index,
+										game.typed_paragraph,
+										PARAGRAPH
+									),
 								}}
 							>
 								{item}
