@@ -144,9 +144,10 @@ export default function RangeGame() {
 										{...props}
 										style={{
 											...props.style,
-											height: "6px",
+											height: "15px",
 											width: "100%",
-											background: "red",
+											background: "var(--color-sky-blue)",
+											borderRadius: "7.5px",
 											position: "relative",
 										}}
 									>
@@ -157,7 +158,7 @@ export default function RangeGame() {
 												left: `${p1}%`,
 												width: `${p2 - p1}%`,
 												height: "100%",
-												background: "green",
+												background: "var(--color-selective-yellow)",
 											}}
 										/>
 										{children}
@@ -186,7 +187,7 @@ export default function RangeGame() {
 														style={{
 															width: "2px",
 															height: "5px",
-															background: "black",
+															background: "var(--color-sky-blue)",
 														}}
 													/>
 													<span style={{ fontSize: "0.7rem" }}>
@@ -207,10 +208,10 @@ export default function RangeGame() {
 									{...rest_props}
 									style={{
 										...rest_props.style,
-										height: "16px",
-										width: "16px",
-										borderRadius: "50%",
-										background: index === 0 ? "black" : "grey",
+										height: "30px",
+										width: "20px",
+										borderRadius: "3px",
+										background: index === 0 ? "var(--color-ut-orange)" : "var(--color-prussian-blue)",
 										display:
 											index === 0 && [0, 1].includes(game.stage)
 												? "none"

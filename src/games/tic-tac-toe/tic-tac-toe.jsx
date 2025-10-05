@@ -106,11 +106,11 @@ export default function TicTacToe() {
 	};
 
 	return (
-		<section style={{ width: "350px" }}>
+		<section>
 			<header>
 				<h3 style={{ color: "var(--color-blue-green)" }}>Tic Tac Toe</h3>
 				{game.active === false && typeof game.winner === "undefined" && (
-					<p style={{ fontSize: "0.85rem" }}>
+					<p style={{ fontSize: "0.85rem", width: "80%" }}>
 						1 coin to enter. Get 3 coins if you win else return home with
 						nothing.
 					</p>
