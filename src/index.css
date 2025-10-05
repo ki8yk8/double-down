@@ -11,6 +11,7 @@
 	--color-ut-orange: #fb8500;
 	--color-white: #f1faee;
 	--color-red: #fb0000;
+	--color-grey: #a7a7a7;
 
 	box-sizing: border-box;
 	font-size: 20px;
@@ -63,6 +64,20 @@ button.u-primary {
 	padding: 0.5rem 1rem;
 	border-radius: 8px;
 	font-weight: 500;
+}
+button.u-secondary {
+	display: block;
+	background-color: var(--color-prussian-blue);
+	color: #fff;
+	font-size: 1rem;
+	padding: 0.5rem 1rem;
+	border-radius: 8px;
+	font-weight: 500;
+}
+
+button.u-primary:disabled {
+	cursor:not-allowed;
+	background-color: var(--color-grey);
 }
 
 h3 {
