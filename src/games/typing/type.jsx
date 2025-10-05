@@ -134,6 +134,7 @@ export default function TypingGame({ onClose }) {
 					height: "80vh",
 					backgroundColor: "var(--color-white)",
 					border: "10px solid var(--color-blue-green)",
+					outline: "1px solid var(--color-white)",
 					bottom: "0",
 					left: "10vw",
 					borderRadius: "10px 10px 0 0",

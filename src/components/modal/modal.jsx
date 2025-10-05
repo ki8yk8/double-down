@@ -25,18 +25,19 @@ export default function Modal({ isOpen, onClose, children }) {
 					width: "40vw",
 					borderRadius: "8px",
 					padding: "1rem",
-					position: "relative"
+					position: "relative",
+					outline: "1px solid var(--color-white)",
 				}}
 			>
 				<header
 					style={{
 						position: "absolute",
 						top: "10px",
-						right: "10px"
+						right: "10px",
 					}}
 				>
 					<button onClick={onClose}>
-						<MdClose size="1.3rem"/>
+						<MdClose size="1.3rem" />
 					</button>
 				</header>
 				{children}
