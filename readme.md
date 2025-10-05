@@ -1,3 +1,8 @@
+# Game Preview
+<img width="1366" height="694" alt="image" src="https://github.com/user-attachments/assets/ec903efb-ee30-4c32-bb35-a3395bdfba37" />
+
+- Demo available at [https://double-down-one.vercel.app/](https://double-down-one.vercel.app/)
+
 # About the Game
 1. User gets 5 coin initially.
 2. The goal is to earn 10 coins or more to enter into the real game of typing. 
@@ -16,3 +21,7 @@
 3. The more you have coin, the more multiplier you can buy and increase your score.
 
 # Everything is about COIN here 💰💸
+
+# Tools Used
+1. React JS
+2. For sliders I used `react-siders` by Airbnb.
