@@ -5,10 +5,12 @@ import "./app.css";
 import GameContext from "./contexts/game-context";
 import Modal from "./components/modal/modal";
 import TicTacToe from "./games/tic-tac-toe/tic-tac-toe";
+import RangeGame from "./games/range/range";
 
 function App() {
-	const {game_ctx, set_game_ctx} = useContext(GameContext);
+	const { game_ctx, set_game_ctx } = useContext(GameContext);
 	const [show_tic_tac, set_show_tic_tac] = useState(false);
+	const [show_range, set_show_range] = useState(false);
 
 	return (
 		<>
@@ -40,11 +42,17 @@ function App() {
 				<button className="u-link" onClick={() => set_show_tic_tac(true)}>
 					TicTacToe
 				</button>
-				<button className="u-link">Range Select Game</button>
+				<button className="u-link" onClick={() => set_show_range(true)}>
+					Range Select Game
+				</button>
 			</main>
 
 			<Modal isOpen={show_tic_tac} onClose={() => set_show_tic_tac(false)}>
 				<TicTacToe />
+			</Modal>
+
+			<Modal isOpen={show_range} onClose={() => set_show_range(false)}>
+				<RangeGame />
 			</Modal>
 		</>
 	);
