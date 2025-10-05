@@ -84,6 +84,24 @@ function compute_move(grid, bot_sign) {
 			(index) => grid[index] === null
 		)[0];
 	}
+
+	// if there are no possible win conditions then first goal is center
+	if (grid[4] === null) {
+		return 4;
+	}
+
+	// then corners
+	const corners = [0, 2, 6, 8];
+	const available_corners = corners.filter((index) => grid[index] === null);
+	if (available_corners.length > 0) {
+		return get_random_move(available_corners);
+	}
+
+	// then random
+	const free_corners = [0, 1, 2, 3, 4, 5, 6, 7, 8].filter(
+		(index) => grid[index] === null
+	);
+	return get_random_move(free_corners);
 }
 
 export default function TicTacToe() {
@@ -124,6 +142,7 @@ export default function TicTacToe() {
 				return {
 					...prev,
 					grid: updated_grid,
+					current: "user",
 					winner:
 						is_game_over(updated_grid).length > 0
 							? is_game_over(updated_grid).length === 9
@@ -132,13 +151,18 @@ export default function TicTacToe() {
 							: undefined,
 				};
 			});
-		}, 1000);
+		}, 500);
 
 		return () => clearTimeout(move_timeout);
 	}, [game.current]);
 
 	const handle_cell_clicked = (index) => {
-		if (game.grid[index] || typeof game.winner !== "undefined") return;
+		if (
+			game.grid[index] ||
+			typeof game.winner !== "undefined" ||
+			game.current === "bot"
+		)
+			return;
 
 		set_game((prev) => {
 			// next turn
