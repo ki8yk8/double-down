@@ -6,11 +6,13 @@ import GameContext from "./contexts/game-context";
 import Modal from "./components/modal/modal";
 import TicTacToe from "./games/tic-tac-toe/tic-tac-toe";
 import RangeGame from "./games/range/range";
+import TypingGame from "./games/typing/type";
 
 function App() {
 	const { game_ctx, set_game_ctx } = useContext(GameContext);
 	const [show_tic_tac, set_show_tic_tac] = useState(false);
 	const [show_range, set_show_range] = useState(false);
+	const [show_typing, set_show_typing] = useState(true);
 
 	return (
 		<>
@@ -54,6 +56,8 @@ function App() {
 			<Modal isOpen={show_range} onClose={() => set_show_range(false)}>
 				<RangeGame />
 			</Modal>
+
+			{show_typing && <TypingGame />}
 		</>
 	);
 }
