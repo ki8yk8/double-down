@@ -3,9 +3,8 @@ import { GiKeyboard } from "react-icons/gi";
 import { MdClose } from "react-icons/md";
 import GameContext from "../../contexts/game-context";
 
-// const PARAGRAPH =
-// 	"The toaster and I are in an ongoing feud. Every morning I politely request golden-brown perfection, and every morning it responds with charcoal. I’m convinced it has a grudge. Tomorrow I’m bringing in the air fryer as intimidation.";
-const PARAGRAPH = "Hello";
+const PARAGRAPH =
+	"The toaster and I are in an ongoing feud. Every morning I politely request golden-brown perfection, and every morning it responds with charcoal. I’m convinced it has a grudge. Tomorrow I’m bringing in the air fryer as intimidation.";
 
 function is_valid_char(char) {
 	return /^[a-zA-Z0-9\p{P} ]$/u.test(char);
