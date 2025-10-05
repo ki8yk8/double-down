@@ -41,12 +41,115 @@ function App() {
 			</header>
 
 			<main>
-				<button className="u-link" onClick={() => set_show_tic_tac(true)}>
-					TicTacToe
-				</button>
-				<button className="u-link" onClick={() => set_show_range(true)}>
-					Range Select Game
-				</button>
+				<header
+					style={{ width: "60vw", margin: "0 auto", textAlign: "center" }}
+				>
+					<h1>Welcome to Double Down. The ultimate gamble game.</h1>
+					<p>
+						Complete mini games to earn your coins. Once you have 10 coins, go
+						to typing game to show off your typing skills.
+					</p>
+				</header>
+
+				<section style={{ marginTop: "2rem", display: "flex", gap: "2rem" }}>
+					<div
+						style={{
+							display: "flex",
+							flexDirection: "column",
+							flexGrow: 1,
+							backgroundColor: "var(--color-blue-green)",
+							padding: "1rem 1.4rem",
+						}}
+					>
+						<h3 style={{ marginBottom: "1rem" }}>Mini Games</h3>
+						<button
+							className="u-link"
+							onClick={() => set_show_tic_tac(true)}
+							style={{
+								border: "2px dashed var(--color-white)",
+								marginBottom: "1rem",
+								padding: "1rem",
+								width: "100%",
+								fontSize: "1.25rem",
+								fontWeight: 600,
+								color: "var(--color-white)",
+							}}
+						>
+							<p>TicTacToe</p>
+							<p
+								style={{
+									fontSize: "0.8rem",
+									fontWeight: 400,
+									marginTop: "0.25rem",
+								}}
+							>
+								Easy game but less rewardy.
+							</p>
+						</button>
+						<button
+							className="u-link"
+							onClick={() => set_show_range(true)}
+							style={{
+								border: "2px dashed var(--color-white)",
+								marginBottom: "1rem",
+								padding: "1rem",
+								width: "100%",
+								fontSize: "1.25rem",
+								fontWeight: 600,
+								color: "var(--color-white)",
+							}}
+						>
+							<p>Range Game</p>
+							<p
+								style={{
+									fontSize: "0.8rem",
+									fontWeight: 400,
+									marginTop: "0.25rem",
+								}}
+							>
+								The ultimate gambler game. High Risk = High Reward
+							</p>
+						</button>
+					</div>
+
+					<div
+						style={{
+							display: "flex",
+							flexDirection: "column",
+							flexGrow: 1,
+							backgroundColor: "var(--color-ut-orange)",
+							padding: "1rem 1.4rem",
+							position: "relative"
+						}}
+					>
+						<h3 style={{ marginBottom: "1rem" }}>Ultimate Game</h3>
+						<button
+							className="u-link"
+							onClick={() => set_show_typing(true)}
+							style={{
+								border: "2px dashed var(--color-white)",
+								marginBottom: "1rem",
+								padding: "1rem",
+								width: "100%",
+								height: "100%",
+								fontSize: "1.25rem",
+								fontWeight: 600,
+								color: "var(--color-white)",
+							}}
+						>
+							<p>Typing Master</p>
+							<p
+								style={{
+									fontSize: "0.9rem",
+									fontWeight: 400,
+									marginTop: "0.25rem",
+								}}
+							>
+								Have greater than 10 coins? Show off you skills with the typing game.
+							</p>
+						</button>
+					</div>
+				</section>
 			</main>
 
 			<Modal isOpen={show_tic_tac} onClose={() => set_show_tic_tac(false)}>
