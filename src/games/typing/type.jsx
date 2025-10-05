@@ -8,14 +8,23 @@ function is_valid_char(char) {
 }
 
 function compute_wpm(start_time, length) {
-	return 0;
+	const current_time = Date.now();
+
+	const difference_in_minutes = (current_time - start_time) / (1000 * 60);
+	const word_counts = length / 5;
+
+	return Math.round(word_counts / difference_in_minutes);
+}
+
+function compute_mean(arr) {
+	return Math.round(arr.reduce((sum, n) => sum + n, 0) / arr.length);
 }
 
 export default function TypingGame() {
 	const [game, set_game] = useState({
 		stage: 1,
 		typed_paragraph: "",
-		cpm: 0,
+		cpms: [0],
 	});
 	const start_time_ref = useRef(undefined);
 
@@ -37,8 +46,10 @@ export default function TypingGame() {
 		set_game((prev) => ({
 			...prev,
 			typed_paragraph: `${prev.typed_paragraph}${event.key}`,
-			cpm:
-				(Date.now() - start_time_ref.current) / prev.typed_paragraph.length + 1,
+			cpms: [
+				...prev.cpms,
+				compute_wpm(start_time_ref.current, prev.typed_paragraph.length + 1),
+			],
 		}));
 	};
 
@@ -102,7 +113,7 @@ export default function TypingGame() {
 					</p>
 				</main>
 
-				<footer>CPM: {game.cpm}</footer>
+				<footer>{compute_mean(game.cpms)} WPM</footer>
 			</section>
 		</div>
 	);
