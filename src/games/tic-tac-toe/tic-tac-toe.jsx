@@ -1,17 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { LuSwords } from "react-icons/lu";
 import { BsXCircle, BsCircle } from "react-icons/bs";
 
 import Cell from "./cell";
-import {
-	compute_move,
-	get_marker,
-	is_game_over,
-} from "./utils.js";
+import { compute_move, get_marker, is_game_over } from "./utils.js";
 
 import styles from "./tic-tac-toe.module.css";
+import gameContext from "../../contexts/game-context.jsx";
 
 export default function TicTacToe() {
+	const { game_ctx, set_game_ctx } = useContext(gameContext);
+
 	const [game, set_game] = useState({
 		grid: Array(9).fill(null),
 		first: null,
@@ -67,6 +66,12 @@ export default function TicTacToe() {
 		return () => clearTimeout(move_timeout);
 	}, [game.current]);
 
+	useEffect(() => {
+		if (game.winner === "user") {
+			set_game_ctx((prev) => ({ ...prev, coins: prev.coins + 3 }));
+		}
+	}, [game.winner]);
+
 	const handle_cell_clicked = (index) => {
 		if (game.grid[index] || !game.active || game.current === "bot") return;
 
@@ -91,6 +96,13 @@ export default function TicTacToe() {
 				active: ![3, 9].includes(is_game_over(updated).length),
 			};
 		});
+	};
+
+	const handle_game_start = () => {
+		set_game((prev) => ({ ...prev, active: true }));
+
+		// reduce coin by 1
+		set_game_ctx((prev) => ({ ...prev, coins: prev.coins - 1 }));
 	};
 
 	return (
@@ -159,7 +171,7 @@ export default function TicTacToe() {
 				<button
 					className="u-primary"
 					style={{ display: "block", margin: "0 auto", marginTop: "1rem" }}
-					onClick={() => set_game((prev) => ({ ...prev, active: true }))}
+					onClick={handle_game_start}
 				>
 					Gamble <LuSwords />
 					<span style={{ display: "block", fontSize: "0.7rem" }}>

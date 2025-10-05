@@ -2,12 +2,12 @@ import { useContext, useState } from "react";
 import { GiTwoCoins } from "react-icons/gi";
 
 import "./app.css";
-import gameContext from "./contexts/game-context";
+import GameContext from "./contexts/game-context";
 import Modal from "./components/modal/modal";
 import TicTacToe from "./games/tic-tac-toe/tic-tac-toe";
 
 function App() {
-	const game_context = useContext(gameContext);
+	const {game_ctx, set_game_ctx} = useContext(GameContext);
 	const [show_tic_tac, set_show_tic_tac] = useState(true);
 
 	return (
@@ -32,7 +32,7 @@ function App() {
 					<span style={{ color: "var(--color-ut-orange)", fontWeight: 600 }}>
 						Coins:
 					</span>
-					{game_context?.coins}
+					{game_ctx?.coins}
 				</div>
 			</header>
 

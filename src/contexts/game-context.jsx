@@ -1,7 +1,17 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 
-const gameContext = createContext({
+const GameContext = createContext({
 	coins: 0,
 });
 
-export default gameContext;
+export function GameContextProvider ({children}) {
+	const [game_ctx, set_game_ctx]  = useState({
+		coins: 5,
+	})
+
+	const value = {game_ctx, set_game_ctx};
+
+	return <GameContext.Provider value={value}>{children}</GameContext.Provider>
+}
+
+export default GameContext;
