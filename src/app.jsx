@@ -16,22 +16,8 @@ function App() {
 
 	return (
 		<>
-			<header
-				style={{
-					padding: "1rem 0",
-					display: "flex",
-					justifyContent: "flex-end",
-				}}
-			>
-				<div
-					style={{
-						display: "flex",
-						alignItems: "center",
-						gap: "0.25rem",
-						fontSize: "1.2rem",
-						fontWeight: 500,
-					}}
-				>
+			<header className="u-flex u-justify-end u-p-1">
+				<div className="u-flex u-align-center" style={{ gap: "0.25rem", fontSize: "1.2rem", fontWeight: 500 }}>
 					<GiTwoCoins size="2rem" color="var(--color-selective-yellow)" />
 					<span style={{ color: "var(--color-ut-orange)", fontWeight: 600 }}>
 						Coins:
@@ -41,9 +27,7 @@ function App() {
 			</header>
 
 			<main>
-				<header
-					style={{ width: "60vw", margin: "0 auto", textAlign: "center" }}
-				>
+				<header className="u-text-center" style={{ width: "min(90vw, 60rem)", margin: "0 auto" }}>
 					<h1>Welcome to Double Down. The ultimate gamble game.</h1>
 					<p>
 						Complete mini games to earn your coins. Once you have 10 coins, go
@@ -51,16 +35,8 @@ function App() {
 					</p>
 				</header>
 
-				<section style={{ marginTop: "2rem", display: "flex", gap: "2rem" }}>
-					<div
-						style={{
-							display: "flex",
-							flexDirection: "column",
-							flexGrow: 1,
-							backgroundColor: "var(--color-blue-green)",
-							padding: "1rem 1.4rem",
-						}}
-					>
+				<section className="u-flex u-gap-2 u-mobile-stack u-mobile-gap-1 u-mt-2">
+					<div className="u-flex u-flex-column u-flex-grow u-mobile-p-sm" style={{ backgroundColor: "var(--color-blue-green)", padding: "1rem 1.4rem" }}>
 						<h3 style={{ marginBottom: "1rem" }}>Mini Games</h3>
 						<button
 							className="u-link"
@@ -112,16 +88,7 @@ function App() {
 						</button>
 					</div>
 
-					<div
-						style={{
-							display: "flex",
-							flexDirection: "column",
-							flexGrow: 1,
-							backgroundColor: "var(--color-ut-orange)",
-							padding: "1rem 1.4rem",
-							position: "relative"
-						}}
-					>
+					<div className="u-flex u-flex-column u-flex-grow u-relative u-mobile-p-sm" style={{ backgroundColor: "var(--color-ut-orange)", padding: "1rem 1.4rem" }}>
 						<h3 style={{ marginBottom: "1rem" }}>Ultimate Game</h3>
 						<button
 							className="u-link"

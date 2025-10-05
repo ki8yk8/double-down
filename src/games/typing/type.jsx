@@ -128,20 +128,20 @@ export default function TypingGame({ onClose }) {
 			}}
 		>
 			<section
+				className="u-flex u-flex-column"
 				style={{
 					position: "absolute",
-					width: "80vw",
-					height: "80vh",
+					width: "min(95vw, 80rem)",
+					height: "min(90vh, 80vh)",
 					backgroundColor: "var(--color-white)",
 					border: "10px solid var(--color-blue-green)",
 					outline: "1px solid var(--color-white)",
 					bottom: "0",
-					left: "10vw",
+					left: "50%",
+					transform: "translateX(-50%)",
 					borderRadius: "10px 10px 0 0",
 					borderBottom: "none",
-					padding: "30px",
-					display: "flex",
-					flexDirection: "column",
+					padding: "min(30px, 5vw)",
 				}}
 			>
 				<header>
@@ -159,7 +159,7 @@ export default function TypingGame({ onClose }) {
 					</button>
 				</header>
 
-				<main style={{ flexGrow: 1 }}>
+				<main className="u-flex-grow">
 					{[3, 2].includes(game.stage) && (
 						<div
 							style={{
@@ -214,9 +214,7 @@ export default function TypingGame({ onClose }) {
 										<p>(We don't believe in fair play)</p>
 									</div>
 
-									<div
-										style={{ display: "flex", gap: "1rem", flexWrap: "nowrap" }}
-									>
+									<div className="u-flex u-gap-1 u-mobile-stack" style={{ flexWrap: "nowrap" }}>
 										<button
 											className="u-primary"
 											onClick={handle_offer_clicked.bind(null, true)}
@@ -275,14 +273,7 @@ export default function TypingGame({ onClose }) {
 						</>
 					)}
 					{game.stage === 1 && (
-						<p
-							style={{
-								fontSize: "1.4rem",
-								lineHeight: "2rem",
-								textAlign: "center",
-								marginTop: "2rem",
-							}}
-						>
+						<p style={{ fontSize: "min(1.4rem, 4vw)", lineHeight: "min(2rem, 5vw)", textAlign: "center", marginTop: "2rem" }}>
 							{PARAGRAPH.split("").map((item, index) => (
 								<span
 									key={index}
@@ -302,7 +293,7 @@ export default function TypingGame({ onClose }) {
 				</main>
 
 				{game.stage === 1 && (
-					<footer style={{ display: "flex", gap: "3rem" }}>
+					<footer className="u-flex u-gap-2 u-mobile-gap-1 u-mobile-text-sm">
 						<p>{compute_mean(game.cpms)} WPM</p>
 						<p>{get_accuracy(game.typed_paragraph, PARAGRAPH)}% Accurate</p>
 					</footer>

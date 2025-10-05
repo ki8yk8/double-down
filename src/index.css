@@ -30,6 +30,17 @@ body {
 	color: var(--color-prussian-blue);
 }
 
+/* Mobile styles */
+@media (max-width: 768px) {
+	body {
+		padding: 10px 15px;
+	}
+	
+	#root {
+		font-size: 18px;
+	}
+}
+
 p,
 button {
 	margin: 0;
@@ -89,6 +100,14 @@ h1 {
 	margin-bottom: 1rem;
 }
 
+/* Mobile heading adjustments */
+@media (max-width: 768px) {
+	h1 {
+		font-size: 1.5rem;
+		line-height: 1.7rem;
+	}
+}
+
 h3 {
 	margin: 0;
 	padding: 0;
@@ -114,5 +133,122 @@ span.u-medium, p.u-medium {
 		transform: scale(1);
 	}	to {
 		transform: scale(1.05);
+	}
+}
+
+/* Responsive utility classes */
+.u-flex {
+	display: flex;
+}
+
+.u-flex-column {
+	flex-direction: column;
+}
+
+.u-gap-1 {
+	gap: 1rem;
+}
+
+.u-gap-2 {
+	gap: 2rem;
+}
+
+.u-text-center {
+	text-align: center;
+}
+
+.u-w-full {
+	width: 100%;
+}
+
+.u-h-full {
+	height: 100%;
+}
+
+.u-mt-2 {
+	margin-top: 2rem;
+}
+
+.u-mb-1 {
+	margin-bottom: 1rem;
+}
+
+.u-p-1 {
+	padding: 1rem;
+}
+
+.u-justify-end {
+	justify-content: flex-end;
+}
+
+.u-justify-center {
+	justify-content: center;
+}
+
+.u-align-center {
+	align-items: center;
+}
+
+.u-flex-grow {
+	flex-grow: 1;
+}
+
+.u-relative {
+	position: relative;
+}
+
+/* Mobile-specific responsive classes */
+@media (max-width: 768px) {
+	.u-mobile-stack {
+		flex-direction: column;
+	}
+	
+	.u-mobile-text-sm {
+		font-size: 0.9rem;
+	}
+	
+	.u-mobile-gap-1 {
+		gap: 1rem;
+	}
+	
+	.u-mobile-p-sm {
+		padding: 0.75rem;
+	}
+	
+	.u-mobile-w-full {
+		width: 100%;
+	}
+	
+	/* Make buttons more mobile-friendly */
+	button.u-primary, button.u-secondary {
+		font-size: 0.9rem;
+		padding: 0.75rem 1rem;
+	}
+	
+	/* Improve game card buttons on mobile */
+	.u-mobile-stack > div button {
+		margin-bottom: 0.75rem !important;
+	}
+	
+	/* Mobile typography adjustments */
+	h3 {
+		font-size: 1rem;
+	}
+	
+	/* Typing game mobile adjustments */
+	.u-mobile-gap-1 {
+		gap: 0.5rem !important;
+	}
+	
+	/* Ensure icons scale appropriately on mobile */
+	.u-mobile-stack .u-primary svg,
+	.u-mobile-stack .u-secondary svg {
+		width: 1.2rem;
+		height: 1.2rem;
+	}
+	
+	/* Make coin display more compact on mobile */
+	.u-align-center {
+		font-size: 1rem !important;
 	}
 }
