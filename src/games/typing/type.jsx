@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 
-const PARAGRAPH =
-	"The toaster and I are in an ongoing feud. Every morning I politely request golden-brown perfection, and every morning it responds with charcoal. I’m convinced it has a grudge. Tomorrow I’m bringing in the air fryer as intimidation.";
+// const PARAGRAPH =
+// 	"The toaster and I are in an ongoing feud. Every morning I politely request golden-brown perfection, and every morning it responds with charcoal. I’m convinced it has a grudge. Tomorrow I’m bringing in the air fryer as intimidation.";
+const PARAGRAPH = "Hello";
 
 function is_valid_char(char) {
 	return /^[a-zA-Z0-9\p{P} ]$/u.test(char);
@@ -50,13 +51,18 @@ export default function TypingGame() {
 		typed_paragraph: "",
 		cpms: [0],
 	});
+	const typed_paragraph_ref = useRef("");
 	const start_time_ref = useRef(undefined);
 
 	useEffect(() => {
+		if (game.stage === 2) {
+		}
+
+		if (game.stage !== 1) return;
 		window.addEventListener("keydown", handle_keydown);
 
 		return () => window.removeEventListener("keydown", handle_keydown);
-	}, []);
+	}, [game.stage]);
 
 	const handle_keydown = (event) => {
 		event.preventDefault();
@@ -67,14 +73,23 @@ export default function TypingGame() {
 
 		if (!is_valid_char(event.key)) return;
 
-		set_game((prev) => ({
-			...prev,
-			typed_paragraph: `${prev.typed_paragraph}${event.key}`,
-			cpms: [
-				...prev.cpms,
-				compute_wpm(start_time_ref.current, prev.typed_paragraph.length + 1),
-			],
-		}));
+		set_game((prev) => {
+			typed_paragraph_ref.current = `${prev.typed_paragraph}${event.key}`;
+
+			return {
+				...prev,
+				typed_paragraph: `${prev.typed_paragraph}${event.key}`,
+				cpms: [
+					...prev.cpms,
+					compute_wpm(start_time_ref.current, prev.typed_paragraph.length + 1),
+				],
+			};
+		});
+
+		if (typed_paragraph_ref.current.length >= PARAGRAPH.length - 1) {
+			set_game((prev) => ({ ...prev, stage: 2 }));
+			window.removeEventListener("keydown", handle_keydown);
+		}
 	};
 
 	return (
@@ -85,7 +100,6 @@ export default function TypingGame() {
 				left: 0,
 				width: "100vw",
 				height: "100vh",
-				// backgroundColor: "var(--color-white)",
 				backdropFilter: "blur(1px)",
 			}}
 		>
@@ -108,7 +122,7 @@ export default function TypingGame() {
 						Typing Contest
 					</h3>
 					<p style={{ textAlign: "center", fontSize: "0.8rem" }}>
-						Type faster to score more.
+						Type faster and accurate to win
 					</p>
 				</header>
 
